@@ -5,4 +5,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("<int:id>", views.programm, name="programm"),
     path("feed/", views.feed, name="feed"),
+    path("addprogramm/", views.addprogramm, name="addprogramm"),
 ]

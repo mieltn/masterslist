@@ -1,6 +1,21 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<p>{{pr.name}}</p>
-<a href="{{pr.link}}">programm page</a>
+<form method="post", action="#">
+    <h1>{{pr.name}}</h1>
+    <ul>
+        {% for item in pr.field_set.all %}
+            <li>{{item.field_type}} - {{item.value}}</li>
+        {% endfor %}
+    </ul>
+    <select name="fieldtype">
+        {% for item in ft.all %}
+            <option value="{{item}}">{{item}}</option>
+        {% endfor %}
+    </select>
+    <input type="text", name="field">
+    <button type="submit", name="addfield", value="addfield">Add field</button>
+    <br>
+    <button type="submit", name="save", value="save">Save</button>
+</form>
 {% endblock %}
