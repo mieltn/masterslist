@@ -2,20 +2,28 @@
 
 {% block content %}
 <form method="post", action="#">
+    {% csrf_token %}
     <h1>{{pr.name}}</h1>
-    <ul>
+    <!-- <ul>
         {% for item in pr.field_set.all %}
             <li>{{item.field_type}} - {{item.value}}</li>
         {% endfor %}
-    </ul>
+    </ul> -->
+    <div>
+        {% for item in pr.field_set.all %}
+            <div>
+                {{item.field_type}} - {{item.value}}
+            </div>
+        {% endfor %}
+    </div>
     <select name="fieldtype">
         {% for item in ft.all %}
-            <option value="{{item}}">{{item}}</option>
+            <option name="{{item.id}}", value="{{item}}">{{item}}</option>
         {% endfor %}
     </select>
     <input type="text", name="field">
     <button type="submit", name="addfield", value="addfield">Add field</button>
-    <br>
-    <button type="submit", name="save", value="save">Save</button>
+    <!-- <br>
+    <button type="submit", name="edit", value="edit">Edit</button> -->
 </form>
 {% endblock %}

@@ -10,6 +10,13 @@ def index(request):
 def programm(request, id):
     pr = Programm.objects.get(id=id)
     ft = FieldType.objects.all()
+
+    if request.POST.get("addfield"):
+        value = request.POST.get("field")
+        field_type_id = ft.get(name=request.POST.get("fieldtype")).id
+        newf = Field(programm_id=id, field_type_id=field_type_id, value=value)
+        newf.save()
+
     return render(
         request,
         "main/programm.html",
