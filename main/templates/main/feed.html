@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <h1>master programms feed</h1>
+    <ul>
+        {% for item in allpr %}
+            <li>{{item.name}}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
