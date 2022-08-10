@@ -47,11 +47,11 @@ def edit(request, id):
         if request.POST.get("addupdate"):
             value = request.POST.get("field")
             # checks if the field already exists
-            if field_type in [field.field_type for field in pr.field_set.all()]:
+            try:
                 f = Field.objects.get(programm_id=id, field_type_id=field_type.id)
                 f.value = value
                 f.save()
-            else:
+            except:
                 newf = Field(programm_id=id, field_type_id=field_type.id, value=value)
                 newf.save()
 
