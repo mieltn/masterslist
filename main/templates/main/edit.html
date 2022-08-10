@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<form method="post", action="#">
+    {% csrf_token %}
+    <h1>{{pr.name}}</h1>
+    <div>
+        {% for item in pr.field_set.all %}
+            <div>
+                {{item.field_type}} - {{item.value}}
+                <button type="submit", name="remove", value="{{item.id}}">Remove</button>
+            </div>
+        {% endfor %}
+    </div>
+    <select name="fieldtype">
+        {% for item in ft.all %}
+            <option name="{{item.id}}", value="{{item}}">{{item}}</option>
+        {% endfor %}
+    </select>
+    <input type="text", name="field">
+    <button type="submit", name="addupdate", value="addupdate">Add</button>
+    <br>
+    <button type="submit", name="save", value="save">Save</button>
+</form>
+{% endblock %}

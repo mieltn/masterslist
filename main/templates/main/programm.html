@@ -11,14 +11,6 @@
             </div>
         {% endfor %}
     </div>
-    <select name="fieldtype">
-        {% for item in ft.all %}
-            <option name="{{item.id}}", value="{{item}}">{{item}}</option>
-        {% endfor %}
-    </select>
-    <input type="text", name="field">
-    <button type="submit", name="addfield", value="addfield">Add field</button>
-    <!-- <br>
-    <button type="submit", name="edit", value="edit">Edit</button> -->
+    <button type="submit", name="edit", value="edit">Edit</button>
 </form>
 {% endblock %}
