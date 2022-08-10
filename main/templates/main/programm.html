@@ -4,11 +4,6 @@
 <form method="post", action="#">
     {% csrf_token %}
     <h1>{{pr.name}}</h1>
-    <!-- <ul>
-        {% for item in pr.field_set.all %}
-            <li>{{item.field_type}} - {{item.value}}</li>
-        {% endfor %}
-    </ul> -->
     <div>
         {% for item in pr.field_set.all %}
             <div>

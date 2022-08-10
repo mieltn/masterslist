@@ -12,10 +12,11 @@ def programm(request, id):
     ft = FieldType.objects.all()
 
     if request.POST.get("addfield"):
-        value = request.POST.get("field")
-        field_type_id = ft.get(name=request.POST.get("fieldtype")).id
-        newf = Field(programm_id=id, field_type_id=field_type_id, value=value)
-        newf.save()
+        field_type = ft.get(name=request.POST.get("fieldtype"))
+        if field_type not in [field.field_type for field in pr.field_set.all()]:
+            value = request.POST.get("field")
+            newf = Field(programm_id=id, field_type_id=field_type.id, value=value)
+            newf.save()
 
     return render(
         request,
