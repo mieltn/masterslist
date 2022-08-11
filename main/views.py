@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Programm, Field, FieldType
+from .models import Programm
 from .forms import AddProgramm
 
 # Create your views here.
@@ -12,6 +12,10 @@ def programm(request, id):
 
     if request.POST.get("edit"):
         return HttpResponseRedirect("/%i/edit/" %pr.id)
+
+    elif request.POST.get("delete"):
+        pr.delete()
+        return HttpResponseRedirect("feed/")
 
     return render(
         request,
@@ -28,42 +32,35 @@ def addprogramm(request):
         form = AddProgramm(request.POST)
         if form.is_valid():
             newpr = Programm(
-                name = form.cleaned_data["name"]
+                name = form.cleaned_data["name"],
+                university = form.cleaned_data["university"],
+                duration = form.cleaned_data["duration"],
+                webpage = form.cleaned_data["webpage"],
+                other = form.cleaned_data["other"]
             )
             newpr.save()
-            return HttpResponseRedirect("/%i/edit/" %newpr.id)
+            return HttpResponseRedirect("/%i" %newpr.id)
     else:
         form = AddProgramm()
 
     return render(request, "main/addprogramm.html", {"form": form})
 
 def edit(request, id):
-
     pr = Programm.objects.get(id=id)
-    ft = FieldType.objects.all()
 
     if request.method == "POST":
-        field_type = ft.get(name=request.POST.get("fieldtype"))
-        if request.POST.get("addupdate"):
-            value = request.POST.get("field")
-            # checks if the field already exists
-            try:
-                f = Field.objects.get(programm_id=id, field_type_id=field_type.id)
-                f.value = value
-                f.save()
-            except:
-                newf = Field(programm_id=id, field_type_id=field_type.id, value=value)
-                newf.save()
+        form = AddProgramm(request.POST)
+        if form.is_valid():
+            pr.name = form.cleaned_data["name"]
+            pr.university = form.cleaned_data["university"]
+            pr.duration = form.cleaned_data["duration"]
+            pr.webpage = form.cleaned_data["webpage"]
+            pr.other = form.cleaned_data["other"]
+            pr.save()
+        
+        return HttpResponseRedirect("/%i" %pr.id)
 
-        elif request.POST.get("remove"):
-            f = Field.objects.get(id=request.POST.get("remove"))
-            f.delete()
-
-        elif request.POST.get("save"):
-            return HttpResponseRedirect("/%i" %pr.id)
-
-    return render(
-        request,
-        "main/edit.html",
-        {"pr": pr, "ft": ft}
-    )
+    else:
+        form = AddProgramm(instance=pr)
+        return render(request, "main/edit.html", {"form": form})
+        

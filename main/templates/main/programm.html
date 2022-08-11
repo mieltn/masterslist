@@ -4,13 +4,11 @@
 <form method="post", action="#">
     {% csrf_token %}
     <h1>{{pr.name}}</h1>
-    <div>
-        {% for item in pr.field_set.all %}
-            <div>
-                {{item.field_type}} - {{item.value}}
-            </div>
-        {% endfor %}
-    </div>
+    <h3 style="color: dimgrey">{{pr.university}}</h3>
+    <p>duration - {{pr.duration}}</p>
+    <p><a href="{{pr.webpage}}">webpage</a></p>
+    <p>{{pr.other}}</p>
     <button type="submit", name="edit", value="edit", class="btn btn-secondary btn-sm">edit</button>
+    <button type="submit", name="delete", value="delete", class="btn btn-secondary btn-sm">delete</button>
 </form>
 {% endblock %}
