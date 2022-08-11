@@ -1,3 +1,10 @@
+
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','my_django_project.settings')
+
+import django
+django.setup()
+
 from main.models import Country
 
 COUNTRIES = [
