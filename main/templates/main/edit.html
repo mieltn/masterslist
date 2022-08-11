@@ -8,7 +8,7 @@
         {% for item in pr.field_set.all %}
             <div>
                 {{item.field_type}} - {{item.value}}
-                <button type="submit", name="remove", value="{{item.id}}">Remove</button>
+                <button type="submit", name="remove", value="{{item.id}}">remove</button>
             </div>
         {% endfor %}
     </div>
@@ -18,8 +18,8 @@
         {% endfor %}
     </select>
     <input type="text", name="field">
-    <button type="submit", name="addupdate", value="addupdate">Add</button>
+    <button type="submit", name="addupdate", value="addupdate">add</button>
     <br>
-    <button type="submit", name="save", value="save">Save</button>
+    <button type="submit", name="save", value="save">save</button>
 </form>
 {% endblock %}

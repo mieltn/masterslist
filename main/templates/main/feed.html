@@ -1,10 +1,14 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-    <h1>master programms feed</h1>
-    <ul>
-        {% for item in allpr %}
-            <li>{{item.name}}</li>
-        {% endfor %}
-    </ul>
+    <h1 style="margin-left: 15px">master programms feed</h1>
+    {% for item in allpr %}
+    <div class="card", style="margin: 15px 15px 15px 15px">
+        <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="http://127.0.0.1:8000/{{item.id}}" class="btn btn-secondary btn-sm">More</a>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}
