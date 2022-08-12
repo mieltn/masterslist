@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Programm
+from .models import Programm, Country, Subject
 from .forms import AddProgramm
 
 # Create your views here.
@@ -34,6 +34,8 @@ def addprogramm(request):
             newpr = Programm(
                 name = form.cleaned_data["name"],
                 university = form.cleaned_data["university"],
+                country_id = form.cleaned_data["country"].id,
+                subject_id = form.cleaned_data["subject"].id,
                 duration = form.cleaned_data["duration"],
                 webpage = form.cleaned_data["webpage"],
                 other = form.cleaned_data["other"]
@@ -53,6 +55,8 @@ def edit(request, id):
         if form.is_valid():
             pr.name = form.cleaned_data["name"]
             pr.university = form.cleaned_data["university"]
+            pr.country_id = form.cleaned_data["country"].id
+            pr.subject_id = form.cleaned_data["subject"].id
             pr.duration = form.cleaned_data["duration"]
             pr.webpage = form.cleaned_data["webpage"]
             pr.other = form.cleaned_data["other"]
@@ -63,4 +67,3 @@ def edit(request, id):
     else:
         form = AddProgramm(instance=pr)
         return render(request, "main/edit.html", {"form": form})
-        

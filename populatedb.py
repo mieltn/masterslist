@@ -1,11 +1,11 @@
 
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE','my_django_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','masterslist.settings')
 
 import django
 django.setup()
 
-from main.models import Country
+from main.models import Country, Subject
 
 COUNTRIES = [
     'Afghanistan', 'Aland Islands', 'Albania', 'Algeria', 'American Samoa',
@@ -51,7 +51,26 @@ COUNTRIES = [
     'Wallis and Futuna', 'Yemen', 'Zambia', 'Zimbabwe'
 ]
 
+SUBJECTS = [
+    'Linguistics', 'Theology, Divinity & Religious Studies', 'Archaeology', 'Architecture & Built Environment',
+    'Art & Design', 'Classics & Ancient History', 'English Language and Literature', 'History', 'Modern Languages',
+    'Performing Arts', 'Philosophy', 'Engineering - Chemical', 'Engineering - Civil and Structural',
+    'Computer Science and Information Systems', 'Engineering - Electrical and Electronic', 'Engineering - Petroleum',
+    'Engineering - Mechanical', 'Engineering - Mineral & Mining', 'Agriculture & Forestry', 'Anatomy & Physiology',
+    'Biological Sciences', 'Dentistry', 'Medicine', 'Nursing', 'Pharmacy & Pharmacology', 'Psychology', 'Veterinary Science',
+    'Chemistry', 'Earth and Marine Sciences', 'Environmental Sciences', 'Geography', 'Geology', 'Geophysics',
+    'Materials Sciences', 'Mathematics', 'Physics & Astronomy', 'Accounting and Finance', 'Anthropology',
+    'Business & Management Studies', 'Communication and Media Studies', 'Development Studies', 'Economics and Econometrics',
+    'Education and Training', 'Hospitality & Leisure Management', 'Law and Legal Studies', 'Library & Information Management',
+    'Politics', 'Social Policy & Administration', 'Sociology', 'Sports-Related Subjects',
+    'Statistics and Operational Research'
+]
+
 if __name__ == "__main__":
     for COUNTRY in COUNTRIES:
         country = Country(name=COUNTRY)
         country.save()
+
+    for SUBJ in SUBJECTS:
+        subject = Subject(name=SUBJ)
+        subject.save()

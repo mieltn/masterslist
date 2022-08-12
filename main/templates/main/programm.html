@@ -5,6 +5,8 @@
     {% csrf_token %}
     <h1>{{pr.name}}</h1>
     <h3 style="color: dimgrey">{{pr.university}}</h3>
+    <h3 style="color: lightgrey">{{pr.country}}</h3>
+    <h3 style="color: lightgrey">{{pr.subject}}</h3>
     <p>duration - {{pr.duration}}</p>
     <p><a href="{{pr.webpage}}">webpage</a></p>
     <p>{{pr.other}}</p>
