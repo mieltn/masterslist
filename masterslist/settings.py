@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
+    'register.apps.RegisterConfig',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# where to redirect after login/logout
+LOGIN_REDIRECT_URL = "/feed"
+LOGOUT_REDIRECT_URL = "/"
+
+# where to redirect if user is not authenticated
+# !!! --- name from urlpatterns --- !!!
+LOGIN_URL = "mylogin"

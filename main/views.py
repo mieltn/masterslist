@@ -1,12 +1,19 @@
 from django.shortcuts import render
+from django.urls import reverse
 from django.http import HttpResponseRedirect
-from .models import Programm, Country, Subject
+from .models import Programm
 from .forms import AddProgramm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
+    # if request.POST.get("login"):
+    #     print('okkkkkkk')
+    #     return HttpResponseRedirect(reverse('mylogin'))
     return render(request, "main/index.html", {})
 
+# checks if user.is_authenticated, if not redirects to login page
+@login_required()
 def programm(request, id):
     pr = Programm.objects.get(id=id)
 
@@ -23,10 +30,12 @@ def programm(request, id):
         {"pr": pr}
     )
 
+@login_required()
 def feed(request):
     allpr = Programm.objects.all()
     return render(request, "main/feed.html", {"allpr": allpr})
 
+@login_required()
 def addprogramm(request):
     if request.method == "POST":
         form = AddProgramm(request.POST)
@@ -47,6 +56,7 @@ def addprogramm(request):
 
     return render(request, "main/addprogramm.html", {"form": form})
 
+@login_required()
 def edit(request, id):
     pr = Programm.objects.get(id=id)
 

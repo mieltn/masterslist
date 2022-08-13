@@ -2,4 +2,7 @@
 
 {% block content %}
 <h1>my last first website</h1>
+{% if not user.is_authenticated %}
+    <p>to proceed, please, login <a href="{% url 'mylogin' %}">here</a></p>
+{% endif %}
 {% endblock %}

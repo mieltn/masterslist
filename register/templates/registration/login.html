@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="input-group mb-3">
+    <form method="post", class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p>new user? create an account <a href="/register/">here</a></p>
+        <button type="submit", name="login", value="login", class="btn btn-secondary btn-sm">login</button>
+    </form>
+</div>
+{% endblock %}

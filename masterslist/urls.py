@@ -15,8 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from register import views as vreg
+from django.contrib.auth.views import LoginView
+from register.forms import CustomLoginForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("main.urls")),
+    # direct path to register view
+    path('register/', vreg.register, name="register"),
+    # LoginView - is django class-based view for login form
+    # since I adjusted login form style I needed to include this url manually
+    path('login/', LoginView.as_view(authentication_form=CustomLoginForm), name="mylogin"),
+    # normally when you use default auth preset django.contrib.auth.urls is enough
+    path('', include("django.contrib.auth.urls")),
 ]
