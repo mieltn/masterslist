@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>add new programm</h1>
-<div class="input-group mb-3">
+<div class="col-4">
     <form method="post", action="/addprogramm/">
         {% csrf_token %}
         {{ form.as_p }}

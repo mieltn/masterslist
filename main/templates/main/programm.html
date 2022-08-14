@@ -10,7 +10,25 @@
     <p>duration - {{pr.duration}}</p>
     <p><a href="{{pr.webpage}}">webpage</a></p>
     <p>{{pr.other}}</p>
-    <button type="submit", name="edit", value="edit", class="btn btn-secondary btn-sm">edit</button>
-    <button type="submit", name="delete", value="delete", class="btn btn-secondary btn-sm">delete</button>
+    <button type="submit" name="edit" value="edit" class="btn btn-secondary btn-sm">edit</button>
+    <button type="submit" name="delete" value="delete" class="btn btn-secondary btn-sm">delete</button>
+    <hr>
+    <h2>connect</h2>
+    {% for cm in pr.comment_set.all %}
+    <div class="col-5">
+        <p>
+            <b>{{cm.user}}</b>
+            <span style="color: lightgrey; position: relative; float: right">{{cm.dt_added}}</span>
+            <br>
+            {{cm.text}}
+        </p>
+    </div>
+    {% endfor %}
+    <div class="col-5">
+        <div class="input-group mb-3">
+            <input class="form-control" placeholder="your message here" name="text"></textarea>
+            <button type="submit" name="comment" value="comment" class="btn btn-secondary btn-sm">post</button>
+        </div>
+    </div>
 </form>
 {% endblock %}

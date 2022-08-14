@@ -3,11 +3,13 @@
 {% block content %}
     <h1 style="margin-left: 15px">master programms feed</h1>
     {% for item in allpr %}
-    <div class="card", style="margin: 15px 15px 15px 15px">
+    <div class="card col-8", style="margin: 15px 15px 15px 15px">
         <div class="card-body">
-            <h5 class="card-title">{{item.name}}</h5>
+            <h5 class="card-title">{{item.name}}
+                <span style="float: right; color: lightgrey">{{item.user}}</span>
+            </h5>
             <p class="card-text">{{item.university}}</p>
-            <a href="{% url 'index' %}{{item.id}}" class="btn btn-secondary btn-sm">More</a>
+            <a href="{% url 'index' %}{{item.id}}" class="btn btn-secondary btn-sm">more</a>
         </div>
     </div>
     {% endfor %}
