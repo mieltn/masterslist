@@ -1,2 +1,2 @@
 # masterslist
-it's on the (air)[http://mieltn.pythonanywhere.com]
+it's on the [air](http://mieltn.pythonanywhere.com)
