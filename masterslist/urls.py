@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from backend.views import ProgramsView, CountriesView
+from backend.views import ProgramsView, ProgramView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('program/', ProgramsView.as_view()),
-    path('country/', CountriesView.as_view()),
+    path('programs/', ProgramsView.as_view(), name='get-add-programs'),
+    path('programs/<int:id>', ProgramView.as_view(), name='get-program'),
+    # path('country/', CountriesView.as_view(), name='get-add-countries'),
 ]
