@@ -12,7 +12,7 @@ function ProgramsList() {
     const getPrograms = async () => {
         const response = await fetch('/programs');
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
         setPrograms(json);
     }
 

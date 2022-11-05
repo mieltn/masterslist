@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+**.DS_Store
 **/__pycache__
 **/migrations/0*.py
 
@@ -19,7 +20,6 @@ db.sqlite3
 /frontend/build
 
 # misc
-/frontend/.DS_Store
 /frontend/.env.local
 /frontend/.env.development.local
 /frontend/.env.test.local

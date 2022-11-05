@@ -20,6 +20,6 @@ from backend.views import ProgramsView, ProgramView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('programs/', ProgramsView.as_view(), name='get-add-programs'),
-    path('programs/<int:id>', ProgramView.as_view(), name='get-program'),
+    path('programs/<int:id>', ProgramView.as_view(), name='get-edit-program'),
     # path('country/', CountriesView.as_view(), name='get-add-countries'),
 ]
