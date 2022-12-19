@@ -3,9 +3,14 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Program
 from .serializers import ProgramSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 class ProgramsView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         programs = Program.objects.all()
         serializer = ProgramSerializer(programs, many=True)
@@ -20,6 +25,9 @@ class ProgramsView(APIView):
 
 
 class ProgramView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, id):
         program = Program.objects.get(pk=id)
         serializer = ProgramSerializer(program)

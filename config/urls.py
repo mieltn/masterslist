@@ -15,11 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+# from rest_framework.authtoken.views import obtain_auth_token
 from backend.views import ProgramsView, ProgramView
-
+from users.views import UserView, LoginView, LogoutView
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('programs/', ProgramsView.as_view(), name='get-add-programs'),
-    path('programs/<int:id>', ProgramView.as_view(), name='get-edit-program'),
+
+    path('api/programs/', ProgramsView.as_view(), name='get-add-programs'),
+    path('api/programs/<int:id>', ProgramView.as_view(), name='get-edit-program'),
     # path('country/', CountriesView.as_view(), name='get-add-countries'),
+
+    path('auth/user/', UserView.as_view()),
+    # path('auth/login/', obtain_auth_token),
+    path('auth/login/', LoginView.as_view()),
+    path('auth/logout/', LogoutView.as_view()),
 ]
