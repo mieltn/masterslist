@@ -36,8 +36,8 @@ class LoginView(APIView):
                 {'msg': 'failed to authenticate user'},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-        token = Token.objects.create(user=user)
-        return Response({'loggedIn': True, 'token': token.key})
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key})
 
 
 class LogoutView(APIView):

@@ -18,6 +18,11 @@ from django.urls import path
 # from rest_framework.authtoken.views import obtain_auth_token
 from backend.views import ProgramsView, ProgramView
 from users.views import UserView, LoginView, LogoutView
+# from rest_framework_simplejwt.views import (
+#     TokenObtainPairView,
+#     TokenRefreshView,
+# )
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -29,4 +34,6 @@ urlpatterns = [
     # path('auth/login/', obtain_auth_token),
     path('auth/login/', LoginView.as_view()),
     path('auth/logout/', LogoutView.as_view()),
+    # path('auth/login/', TokenObtainPairView.as_view()),
+    # path('auth/login/refresh', TokenRefreshView.as_view()),
 ]
