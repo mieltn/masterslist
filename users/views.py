@@ -36,8 +36,9 @@ class LoginView(APIView):
                 {'msg': 'failed to authenticate user'},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-        token = Token.objects.create(user=user)
-        return Response({'loggedIn': True, 'token': token.key})
+        serializer = UserSerializer(user)
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'user': serializer.data, 'token': token.key})
 
 
 class LogoutView(APIView):
@@ -46,4 +47,4 @@ class LogoutView(APIView):
 
     def post(self, request):
         request.user.auth_token.delete()
-        return Response({'loggedOut': True}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -7,6 +7,10 @@ from .models import User
 class AuthBackend(BaseBackend):
 
     def authenticate(self, request, email, password):
-        user = User.objects.get(email=email)
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return
         if user.email == email and check_password(password, user.password):
             return user
+        return

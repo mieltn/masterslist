@@ -1,9 +1,13 @@
 import Navbar from './components/Navbar'
-import Home from './components/Home'
-import ProgramsList from './components/ProgramsList'
-import AddProgram from './components/AddProgram'
-import EditProgram from './components/EditProgram'
-import Program from './components/Program'
+import Home from './pages/Home'
+import PrivateRoutes from './utils/PrivateRoutes'
+
+import ProgramsList from './pages/ProgramsList'
+import AddProgram from './pages/AddProgram'
+import EditProgram from './pages/EditProgram'
+import Program from './pages/Program'
+import Login from './pages/Login'
+
 import { Routes, Route } from 'react-router-dom'
 
 
@@ -13,11 +17,14 @@ function App() {
 		<div className="App">
 		<Navbar />
 		<Routes>
-			<Route path='/' element={<Home />}/>
-			<Route path='/programs' element={<ProgramsList />}/>
-			<Route path='/programs/:id/edit' element={<EditProgram />}/>
-			<Route path='/programs/new' element={<AddProgram />}/>
-			<Route path='/programs/:id' element={<Program />}/>
+			<Route element={<PrivateRoutes />}>
+				<Route path="/" element={<Home />}/>
+				<Route path='/programs' element={<ProgramsList />}/>
+				<Route path='/programs/:id/edit' element={<EditProgram />}/>
+				<Route path='/programs/new' element={<AddProgram />}/>
+				<Route path='/programs/:id' element={<Program />}/>
+			</Route>
+			<Route path='/login' element={<Login />}/>
 		</Routes>
 		</div>
 	);

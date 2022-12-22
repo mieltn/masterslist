@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function ProgramsList() {
@@ -10,9 +10,12 @@ function ProgramsList() {
     }, []);
 
     const getPrograms = async () => {
-        const response = await fetch('/programs');
+        const response = await fetch('/api/programs/', {
+            'headers': {
+                'Authorization': `Token ${localStorage.getItem('token')}`
+            },
+        });
         const json = await response.json();
-        // console.log(json);
         setPrograms(json);
     }
 

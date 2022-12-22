@@ -1,27 +1,15 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import './ProgramForm.css'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../Form.css'
 
 
-function EditProgram () {
-
+function AddProgram() {
     const [formData, setFormData] = useState({
         name: "",
         country: "",
         website: ""
     });
-    const params = useParams();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        getProgram();
-    }, []);
-
-    const getProgram = async () => {
-        const response = await fetch(`/programs/${params.id}`)
-        const data = await response.json()
-        setFormData(data);
-    }
 
     const handleChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -29,19 +17,16 @@ function EditProgram () {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        putData(formData)
+        postData(formData)
             .then(response => navigate(`/programs/${response.id}`))
     }
 
-    const handleCancel = () => {
-        navigate(`/programs/${params.id}`)
-    }
-
-    const putData = async () => {
-        const response = await fetch(`/programs/${params.id}`, {
-            method: 'PUT',
+    const postData = async () => {
+        const response = await fetch('/api/programs/', {
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(formData)
         });
@@ -89,12 +74,9 @@ function EditProgram () {
             {/* <div className="form-group">
                 <textarea className="form-control" placeholder="any additional information you might find useful"/>
             </div> */}
-            <div className="btn-toolbar">
-                <button className="btn btn-light mult-btn" onClick={handleCancel}>cancel</button>
-                <button type="submit" className="btn btn-secondary mult-btn">save</button>
-            </div>
+            <button type="submit" className="btn btn-secondary single-btn">save</button>
         </form>
     );
 }
 
-export default EditProgram;
+export default AddProgram;

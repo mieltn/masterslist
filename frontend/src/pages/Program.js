@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import './ProgramForm.css'
+import '../Form.css'
 
 
 function Program() {
@@ -14,9 +14,12 @@ function Program() {
     }, []);
 
     const getProgram = async () => {
-        const response = await fetch(`/programs/${params.id}`);
+        const response = await fetch(`/api/programs/${params.id}`, {
+            'headers': {
+                'Authorization': `Token ${localStorage.getItem('token')}`
+            },
+        });
         const data = await response.json();
-        // console.log(data);
         setProgram(data);
     }
 
@@ -26,8 +29,13 @@ function Program() {
     }
 
     const handleDelete = async () => {
-        fetch(`/programs/${params.id}`, {method: 'DELETE'})
-            .then(response => navigate('/programs'))
+        fetch(`/api/programs/${params.id}`, {
+            'method': 'DELETE',
+            'headers': {
+                'Authorization': `Token ${localStorage.getItem('token')}`
+            },
+        })
+        .then(response => navigate('/programs'))
     }
 
     return (

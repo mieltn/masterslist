@@ -1,15 +1,31 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import './ProgramForm.css'
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import '../Form.css'
 
 
-function AddProgram() {
+function EditProgram () {
+
     const [formData, setFormData] = useState({
         name: "",
         country: "",
         website: ""
     });
+    const params = useParams();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        getProgram();
+    }, []);
+
+    const getProgram = async () => {
+        const response = await fetch(`/api/programs/${params.id}`, {
+            'headers': {
+                'Authorization': `Token ${localStorage.getItem('token')}`
+            },
+        });
+        const data = await response.json()
+        setFormData(data);
+    }
 
     const handleChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -17,15 +33,20 @@ function AddProgram() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        postData(formData)
+        putData(formData)
             .then(response => navigate(`/programs/${response.id}`))
     }
 
-    const postData = async () => {
-        const response = await fetch('/programs/', {
-            method: 'POST',
+    const handleCancel = () => {
+        navigate(`/programs/${params.id}`)
+    }
+
+    const putData = async () => {
+        const response = await fetch(`/api/programs/${params.id}`, {
+            method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(formData)
         });
@@ -73,9 +94,12 @@ function AddProgram() {
             {/* <div className="form-group">
                 <textarea className="form-control" placeholder="any additional information you might find useful"/>
             </div> */}
-            <button type="submit" className="btn btn-secondary single-btn">save</button>
+            <div className="btn-toolbar">
+                <button className="btn btn-light mult-btn" onClick={handleCancel}>cancel</button>
+                <button type="submit" className="btn btn-secondary mult-btn">save</button>
+            </div>
         </form>
     );
 }
 
-export default AddProgram;
+export default EditProgram;
