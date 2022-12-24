@@ -15,18 +15,16 @@ export const AuthProvider = ({children}) => {
     )
     const navigate = useNavigate()
 
-    let loginUser = async (e) => {
-        e.preventDefault()
-        console.log('form submitted')
-        let response = await fetch('auth/login/', {
+    let loginUser = async (event) => {
+        event.preventDefault()
+        const response = await fetch('auth/login/', {
             'method': 'POST',
             'headers': {
                 'Content-Type': 'application/json'
             },
-            'body': JSON.stringify({'email': e.target.email.value, 'password': e.target.password.value})
+            'body': JSON.stringify({'email': event.target.email.value, 'password': event.target.password.value})
         })
-        let data = await response.json()
-        console.log(data)
+        const data = await response.json()
         if (response.ok) {
             setAuthToken(data.token)
             setUser(data.user)
@@ -39,20 +37,20 @@ export const AuthProvider = ({children}) => {
     }
 
     let logoutUser = async () => {
-        fetch('auth/logout/', {
+        const response = await fetch('auth/logout/', {
             'method': 'POST',
             'headers': {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
             },
         })
-        .then(setAuthToken(null))
-        .then(setUser(null))
-        .then(localStorage.removeItem('token'))
-        .then(localStorage.removeItem('user'))
-        .then(navigate('/login'))
+        setAuthToken(null)
+        setUser(null)
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        navigate('/login')
     }
 
-    let contextData = {
+    const contextData = {
         user: user,
         loginUser: loginUser,
         logoutUser: logoutUser,

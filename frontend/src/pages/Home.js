@@ -6,7 +6,11 @@ function Home() {
     return (
         <div className="Home">
             <h1 style={{textAlign: "center"}}>home</h1>
-            {user && <p>hello {user.email}</p>}
+            {user &&
+                <p style={{textAlign: "center"}}>
+                    you logged in to masterslist as {user.email}
+                </p>
+            }
         </div>
     );
 }

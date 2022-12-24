@@ -7,6 +7,7 @@ import AddProgram from './pages/AddProgram'
 import EditProgram from './pages/EditProgram'
 import Program from './pages/Program'
 import Login from './pages/Login'
+import Register from './pages/Register'
 
 import { Routes, Route } from 'react-router-dom'
 
@@ -25,6 +26,7 @@ function App() {
 				<Route path='/programs/:id' element={<Program />}/>
 			</Route>
 			<Route path='/login' element={<Login />}/>
+			<Route path='/register' element={<Register />}/>
 		</Routes>
 		</div>
 	);

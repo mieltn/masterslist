@@ -29,13 +29,13 @@ function Program() {
     }
 
     const handleDelete = async () => {
-        fetch(`/api/programs/${params.id}`, {
+        const response = await fetch(`/api/programs/${params.id}`, {
             'method': 'DELETE',
             'headers': {
                 'Authorization': `Token ${localStorage.getItem('token')}`
             },
         })
-        .then(response => navigate('/programs'))
+        navigate('/programs')
     }
 
     return (

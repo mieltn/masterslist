@@ -7,11 +7,12 @@ from rest_framework.authentication import TokenAuthentication
 
 from .serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
+from config.permissions import IsAuthOrCreate
 
 
 class UserView(APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthOrCreate]
 
     def get(self, request):
         serializer = UserSerializer(request.user)
