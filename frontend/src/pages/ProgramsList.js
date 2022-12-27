@@ -15,7 +15,7 @@ function ProgramsList() {
                 'Authorization': `Token ${localStorage.getItem('token')}`
             },
         });
-        const json = await response.json();
+        const json = await response.json()
         setPrograms(json);
     }
 

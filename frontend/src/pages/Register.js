@@ -7,7 +7,7 @@ function Register() {
 
     const registerUser = async (event) => {
         event.preventDefault()
-        const response = await fetch('auth/user/', {
+        const response = await fetch('/auth/user/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

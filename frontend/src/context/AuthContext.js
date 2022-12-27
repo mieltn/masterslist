@@ -17,37 +17,41 @@ export const AuthProvider = ({children}) => {
 
     let loginUser = async (event) => {
         event.preventDefault()
-        const response = await fetch('auth/login/', {
-            'method': 'POST',
-            'headers': {
+        const response = await fetch('/auth/login/', {
+            method: 'POST',
+            headers: {
                 'Content-Type': 'application/json'
             },
-            'body': JSON.stringify({'email': event.target.email.value, 'password': event.target.password.value})
+            body: JSON.stringify({email: event.target.email.value, password: event.target.password.value})
         })
         const data = await response.json()
-        if (response.ok) {
+        if (!response.ok) {
+            alert(JSON.stringify({'msg': 'failed to authenticate user'}))
+        } else {
             setAuthToken(data.token)
             setUser(data.user)
             localStorage.setItem('token', data.token)
             localStorage.setItem('user', JSON.stringify(data.user))
             navigate('/')
-        } else {
-            alert(JSON.stringify({'msg': 'failed to authenticate user'}))
         }
     }
 
     let logoutUser = async () => {
-        const response = await fetch('auth/logout/', {
-            'method': 'POST',
-            'headers': {
+        const response = await fetch('/auth/logout/', {
+            method: 'POST',
+            headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,
-            },
+            }
         })
-        setAuthToken(null)
-        setUser(null)
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-        navigate('/login')
+        if (response.status !== 204) {
+            alert(JSON.stringify({"msg": "failed to logout user"}))
+        } else {
+            setAuthToken(null)
+            setUser(null)
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            navigate('/login')
+        }
     }
 
     const contextData = {

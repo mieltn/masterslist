@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Program
-from .serializers import ProgramSerializer
+from .models import Program, Country, Subject
+from .serializers import ProgramSerializer, CountrySerializer, SubjectSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -17,6 +17,7 @@ class ProgramsView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
+        request.data["user"] = request.user.id
         serializer = ProgramSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -35,7 +36,7 @@ class ProgramView(APIView):
 
     def put(self, request, id):
         program = Program.objects.get(pk=id)
-        serializer = ProgramSerializer(program, data=request.data, partial=True)
+        serializer = ProgramSerializer(program, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -47,15 +48,21 @@ class ProgramView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-# class CountriesView(APIView):
-#     def get(self, request):
-#         countries = Country.objects.all()
-#         serializer = CountrySerializer(countries, many=True)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
+class CountriesView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
-#     def post(self, request):
-#         serializer = CountrySerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request):
+        countries = Country.objects.all()
+        serializer = CountrySerializer(countries, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SubjectsView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        subjects = Subject.objects.all()
+        serializer = SubjectSerializer(subjects, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
