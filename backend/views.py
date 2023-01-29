@@ -66,3 +66,11 @@ class SubjectsView(APIView):
         subjects = Subject.objects.all()
         serializer = SubjectSerializer(subjects, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SendProgramsView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        pass

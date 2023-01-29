@@ -1,50 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { getProgram, updateProgram } from '../actions/Programs'
+import ChoicesContext from '../context/ChoicesContext'
 import '../Form.css'
 
 
 function EditProgram () {
 
-    let [countries, setCountries] = useState([])
-    let [subjects, setSubjects] = useState([])
+    const {countries, subjects} = useContext(ChoicesContext)
 
     const params = useParams()
     const navigate = useNavigate()
 
-    const getCountries = async () => {
-        const response = await fetch('/api/countries', {
-            headers: {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            }
-        })
-        const data = await response.json()
-        setCountries(data)
-    }
-
-    const getSubjects = async () => {
-        const response = await fetch('/api/subjects', {
-            headers: {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            }
-        })
-        const data = await response.json()
-        setSubjects(data)
-    }
-
-    const getProgram = async () => {
-        const response = await fetch(`/api/programs/${params.id}`, {
-            'headers': {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            },
-        });
-        const data = await response.json()
-        setFormData(data)
-    }
-
     useEffect(() => {
-        getProgram()
-        getCountries()
-        getSubjects()
+        const fetchData = async () => {
+            setFormData(await getProgram(params.id))
+        }
+        fetchData()
     }, [])
 
     const [formData, setFormData] = useState({
@@ -77,25 +49,12 @@ function EditProgram () {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(formData)
-        putData(formData)
+        updateProgram(params.id, formData)
             .then(response => navigate(`/programs/${response.id}`))
     }
 
     const handleCancel = () => {
         navigate(`/programs/${params.id}`)
-    }
-
-    const putData = async () => {
-        const response = await fetch(`/api/programs/${params.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify(formData)
-        })
-        return await response.json()
     }
 
     const generateOptions = (option) => {

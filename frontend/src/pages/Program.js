@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import '../Form.css'
 import linkIcon from '../static/icons/link.png'
+import { getProgram, deleteProgram } from '../actions/Programs'
 
 
 function Program() {
-    
     const params = useParams()
+    
     const [program, setProgram] = useState({
         name: "",
         university: "",
@@ -22,20 +23,13 @@ function Program() {
         website: "",
         other: "",
     })
-    const navigate = useNavigate();
-
-    const getProgram = async () => {
-        const response = await fetch(`/api/programs/${params.id}`, {
-            'headers': {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            }
-        })
-        const data = await response.json();
-        setProgram(data);
-    }
+    const navigate = useNavigate()
 
     useEffect(() => {
-        getProgram()
+        const fetchData = async () => {
+            setProgram(await getProgram(params.id))
+        }
+        fetchData()
     }, [])
 
     const handleEdit = () => {
@@ -44,12 +38,7 @@ function Program() {
     }
 
     const handleDelete = async () => {
-        await fetch(`/api/programs/${params.id}`, {
-            'method': 'DELETE',
-            'headers': {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            },
-        })
+        await deleteProgram(params.id)
         navigate('/programs')
     }
 
@@ -57,7 +46,7 @@ function Program() {
         <div className="Program">
             <h1 style={{textAlign: "center"}}>
                 {program.name}
-                <a href={program.website} target="_blank">
+                <a href={program.website} target="_blank" rel="noreferrer">
                     <img alt="link-icon" src={linkIcon} width="20" height="20" style={{marginLeft: "10px"}}/>
                 </a>
             </h1>

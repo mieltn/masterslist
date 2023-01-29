@@ -1,42 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { createProgram } from '../actions/Programs'
+import ChoicesContext from '../context/ChoicesContext'
 import '../Form.css'
 
 
 function AddProgram() {
-    let [countries, setCountries] = useState([])
-    let [subjects, setSubjects] = useState([])
 
-    const getCountries = async () => {
-        const response = await fetch('/api/countries', {
-            headers: {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            }
-        })
-        const data = await response.json()
-        setCountries([
-            {id: 0, name: "-- country --"},
-            ...data
-        ])
-    }
-
-    const getSubjects = async () => {
-        const response = await fetch('/api/subjects', {
-            headers: {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            }
-        })
-        const data = await response.json()
-        setSubjects([
-            {id: 0, name: "-- subject --"},
-            ...data
-        ])
-    }
-
-    useEffect(() => {
-        getCountries()
-        getSubjects()
-    }, [])
+    const {countries, subjects} = useContext(ChoicesContext)
 
     const [formData, setFormData] = useState({
         name: "",
@@ -70,20 +41,8 @@ function AddProgram() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        postData(formData)
+        createProgram(formData)
             .then(response => navigate(`/programs/${response.id}`))
-    }
-
-    const postData = async () => {
-        const response = await fetch('/api/programs/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify(formData)
-        })
-        return response.json()
     }
 
     const generateOptions = (option) => {
@@ -154,4 +113,4 @@ function AddProgram() {
     )
 }
 
-export default AddProgram;
+export default AddProgram
