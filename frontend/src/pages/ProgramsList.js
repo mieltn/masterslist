@@ -1,23 +1,17 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { programsList } from '../actions/Programs';
 
 function ProgramsList() {
 
     const [programs, setPrograms] = useState([]);
 
     useEffect(() => {
-        getPrograms();
-    }, []);
-
-    const getPrograms = async () => {
-        const response = await fetch('/api/programs/', {
-            'headers': {
-                'Authorization': `Token ${localStorage.getItem('token')}`
-            },
-        });
-        const json = await response.json()
-        setPrograms(json);
-    }
+        const fetchData = async () => {
+            setPrograms(await programsList())
+        }
+        fetchData()
+    }, [])
 
     return (
         <div className="Programs">

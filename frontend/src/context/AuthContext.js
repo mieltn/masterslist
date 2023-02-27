@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, redirect } from 'react-router-dom'
+import { baseUrl } from '../actions/Urls'
 
 const AuthContext = createContext()
 
@@ -17,7 +18,7 @@ export const AuthProvider = ({children}) => {
 
     let loginUser = async (event) => {
         event.preventDefault()
-        const response = await fetch('/auth/login/', {
+        const response = await fetch(`${baseUrl}/api/login/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -32,12 +33,12 @@ export const AuthProvider = ({children}) => {
             setUser(data.user)
             localStorage.setItem('token', data.token)
             localStorage.setItem('user', JSON.stringify(data.user))
-            navigate('/')
+            redirect('')
         }
     }
 
     let logoutUser = async () => {
-        const response = await fetch('/auth/logout/', {
+        const response = await fetch(`${baseUrl}/api/logout/`, {
             method: 'POST',
             headers: {
                 'Authorization': `Token ${localStorage.getItem('token')}`,

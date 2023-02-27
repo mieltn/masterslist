@@ -19,7 +19,7 @@ function App() {
 		<Navbar />
 		<Routes>
 			<Route element={<PrivateRoutes />}>
-				<Route path="/" element={<Home />}/>
+				<Route path='/' element={<Home />}/>
 				<Route path='/programs' element={<ProgramsList />}/>
 				<Route path='/programs/:id/edit' element={<EditProgram />}/>
 				<Route path='/programs/new' element={<AddProgram />}/>

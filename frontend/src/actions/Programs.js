@@ -1,7 +1,16 @@
-const PROGRAMS_URL = '/api/programs'
+import { baseUrl } from "./Urls"
+
+const programsList = async () => {
+    const response = await fetch(`${baseUrl}/api/programs/`, {
+        'headers': {
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }
+    })
+    return await response.json()
+}
 
 const getProgram = async (programId) => {
-    const response = await fetch(`${PROGRAMS_URL}/${programId}`, {
+    const response = await fetch(`${baseUrl}/api/programs/${programId}`, {
         'headers': {
             'Authorization': `Token ${localStorage.getItem('token')}`
         }
@@ -10,7 +19,7 @@ const getProgram = async (programId) => {
 }
 
 const createProgram = async (formData) => {
-    const response = await fetch(`${PROGRAMS_URL}/`, {
+    const response = await fetch(`${baseUrl}/api/programs/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,7 +31,7 @@ const createProgram = async (formData) => {
 }
 
 const updateProgram = async (programId, formData) => {
-    const response = await fetch(`${PROGRAMS_URL}/${programId}`, {
+    const response = await fetch(`${baseUrl}/api/programs/${programId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +43,7 @@ const updateProgram = async (programId, formData) => {
 }
 
 const deleteProgram = async (programId) => {
-    await fetch(`${PROGRAMS_URL}/${programId}`, {
+    await fetch(`${baseUrl}/api/programs/${programId}`, {
         'method': 'DELETE',
         'headers': {
             'Authorization': `Token ${localStorage.getItem('token')}`
@@ -42,4 +51,10 @@ const deleteProgram = async (programId) => {
     })
 }
 
-export { getProgram, createProgram, updateProgram, deleteProgram }
+export {
+    programsList,
+    getProgram,
+    createProgram,
+    updateProgram,
+    deleteProgram,
+}

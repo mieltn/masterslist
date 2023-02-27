@@ -7,7 +7,7 @@ function Register() {
 
     const registerUser = async (event) => {
         event.preventDefault()
-        const response = await fetch('/auth/user/', {
+        const response = await fetch('http://0.0.0.0:8000/auth/user/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ function Register() {
                 "password": event.target.password.value
             })
         })
-        if (!response.status === 201) {
+        if (response.status !== 201) {
             alert({"msg": "failed to register new user"})
         } else {
             navigate('/login')
