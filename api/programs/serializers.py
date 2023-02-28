@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Program, Country, Subject
+from .models import Program, Country, Subject, Comment
 
 
 class CountrySerializer(serializers.ModelSerializer):
@@ -56,11 +56,9 @@ class ProgramSerializer(serializers.ModelSerializer):
         return instance
 
 
-# class ReadProgramSerializer(ProgramSerializer):
-#     country = serializers.StringRelatedField()
-#     subject = serializers.StringRelatedField()
-
-#     class Meta:
-#         model = Program
-#         fields = '__all__'
+class CommentSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Comment
+        fields = '__all__'
         

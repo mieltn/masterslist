@@ -5,6 +5,7 @@ from programs.views import (
     ProgramView,
     CountriesView,
     SubjectsView,
+    CommentsView,
 )
 from users.views import UserView, LoginView, LogoutView
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path('api/programs/<int:id>', ProgramView.as_view()),
     path('api/countries/', CountriesView.as_view()),
     path('api/subjects/', SubjectsView.as_view()),
+    path('api/comments/', CommentsView.as_view()),
 
     path('api/user/', UserView.as_view()),
     path('api/login/', LoginView.as_view()),

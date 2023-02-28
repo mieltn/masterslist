@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Program, Country, Subject
-from .serializers import ProgramSerializer, CountrySerializer, SubjectSerializer
+from .models import Program, Country, Subject, Comment
+from .serializers import ProgramSerializer, CountrySerializer, SubjectSerializer, CommentSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -12,7 +12,7 @@ class ProgramsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        programs = Program.objects.all()
+        programs = Program.objects.filter(user_id=request.user.id).all()
         serializer = ProgramSerializer(programs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -68,9 +68,24 @@ class SubjectsView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class SendProgramsView(APIView):
+class CommentsView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        pass
+        comments = (
+            Comment.objects
+            .filter(program_id=request.GET.get("programId"))
+            .all()
+            .order_by("-id")
+        )
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        request.data["user"] = request.user.id
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

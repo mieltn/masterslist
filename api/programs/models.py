@@ -28,3 +28,13 @@ class Program(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Comment(models.Model):
+    text = models.CharField(max_length=300)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, default="unknown", on_delete=models.SET_DEFAULT)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.pk
