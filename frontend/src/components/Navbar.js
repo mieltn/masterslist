@@ -11,7 +11,7 @@ function Navbar() {
                     <Link to="/" className="nav-link">home</Link>
                     <Link  to="/programs" className="nav-link">programs</Link>
                     <Link to="/programs/new" className="nav-link">add program</Link>
-                    {user && <Link to="/logout" className="nav-link" onClick={logoutUser}>logout</Link>}
+                    {user && <Link to="/login" className="nav-link" onClick={logoutUser}>logout</Link>}
                 </div>
             </div>
         </nav>

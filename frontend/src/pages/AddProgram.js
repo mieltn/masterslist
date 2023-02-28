@@ -41,10 +41,8 @@ function AddProgram() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.target);
-        console.log(data);
-        // createProgram(formData)
-        //     .then(response => navigate(`/programs/${response.id}`))
+        createProgram(formData)
+            .then(response => navigate(`/programs/${response.id}`))
     }
 
     const generateOptions = (option) => {

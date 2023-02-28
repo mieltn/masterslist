@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import '../Form.css'
+import { baseUrl } from '../actions/Urls'
 
 function Register() {
 
@@ -7,7 +8,7 @@ function Register() {
 
     const registerUser = async (event) => {
         event.preventDefault()
-        const response = await fetch('http://0.0.0.0:8000/auth/user/', {
+        const response = await fetch(`${baseUrl}/api/user/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
